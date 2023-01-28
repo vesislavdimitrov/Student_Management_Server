@@ -10,5 +10,7 @@ Includes 3 types of users:
 > Student
 
 Admin users, can create other user objects and save them in the users.bin file.
+
 Teachers can submit grades for students.
+
 Students can request a sorted list of all their grades.
