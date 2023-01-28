@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Grade implements Serializable {
     private String subject;
@@ -27,13 +28,7 @@ public class Grade implements Serializable {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = subject.hashCode();
-        temp = Double.doubleToLongBits(grade);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + semester;
-        return result;
+        return Objects.hash(subject, grade, semester);
     }
 
     @Override
