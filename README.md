@@ -5,8 +5,8 @@
 Java multi-threaded server that stores information about students.
 Includes 3 types of users:
 
-> Admin
-> Teacher
+> Admin, 
+> Teacher, 
 > Student
 
 Admin users, can create other user objects and save them in the users.bin file.
