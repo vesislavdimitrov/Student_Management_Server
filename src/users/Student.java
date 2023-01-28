@@ -45,5 +45,4 @@ public class Student extends User{
     public void setGrade(Grade grade) {
         this.grades.add(grade);
     }
-
 }

@@ -30,6 +30,7 @@ public class Resolver implements Runnable {
             };
         }
     }
+
     private final Socket client;
     Admin admin = Admin.getInstance();
 
@@ -39,9 +40,11 @@ public class Resolver implements Runnable {
 
     @Override
     public void run() {
+
         BufferedReader reader;
         PrintWriter writer;
         Console console;
+
         try {
             writer = new PrintWriter(client.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -55,14 +58,14 @@ public class Resolver implements Runnable {
             
             UserType userType = checkCredentials(username, password);
             switch (Objects.requireNonNull(userType)) {
-                case ADMIN -> openAdminCommunication(writer, reader);
+                case ADMIN -> openAdminCommunicationPanel(writer, reader);
                 case TEACHER -> {
                     Teacher teacher = (Teacher) admin.createUser(userType, username, password);
-                    openTeacherCommunication(writer, reader, teacher);
+                    openTeacherCommunicationPanel(writer, reader, teacher);
                 }
                 case STUDENT -> {
                     Student student = (Student) admin.createUser(userType, username, password);
-                    openStudentCommunication(writer, student);
+                    openStudentCommunicationPanel(writer, student);
                 }
                 default -> throw new InvalidCredentialsException();
             }
@@ -83,7 +86,9 @@ public class Resolver implements Runnable {
         }
         return null;
     }
-    private void openAdminCommunication(PrintWriter writer, BufferedReader reader) {
+
+    /* communication panels */
+    private void openAdminCommunicationPanel(PrintWriter writer, BufferedReader reader) {
         try {
             writer.println(Prompts.welcomePrompt(UserType.ADMIN));
             String userType = reader.readLine();
@@ -98,12 +103,12 @@ public class Resolver implements Runnable {
         }
     }
 
-    private void openStudentCommunication(PrintWriter writer, Student student) {
+    private void openStudentCommunicationPanel(PrintWriter writer, Student student) {
         writer.println(Prompts.welcomePrompt(UserType.STUDENT));
         writer.println(student.getSortedGrades());
     }
 
-    private void openTeacherCommunication(PrintWriter writer, BufferedReader reader, Teacher teacher) {
+    private void openTeacherCommunicationPanel(PrintWriter writer, BufferedReader reader, Teacher teacher) {
         try {
             writer.println(Prompts.welcomePrompt(UserType.TEACHER));
 
